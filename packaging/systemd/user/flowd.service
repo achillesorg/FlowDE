@@ -6,6 +6,7 @@ PartOf=flowde.target
 [Service]
 ExecStart=/usr/bin/flowd
 Restart=on-failure
+Environment=MALLOC_ARENA_MAX=1 MALLOC_MMAP_THRESHOLD_=131072 MALLOC_TRIM_THRESHOLD_=131072
 NoNewPrivileges=yes
 ProtectSystem=strict
 ProtectHome=read-only

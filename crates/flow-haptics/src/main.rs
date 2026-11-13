@@ -50,7 +50,11 @@ async fn play(sh: &Shared, p: Pattern) -> ipc::RpcResult {
         return Ok(json!({"played": false, "reason": "disabled or zero intensity"}));
     }
     if let Some(c) = &sh.conn {
-        if let Ok(px) = FeedbackProxy::new(c).await {
+        if let Ok(px) = FeedbackProxy::builder(c)
+            .cache_properties(zbus::proxy::CacheProperties::No)
+            .build()
+            .await
+        {
             let mut hints: HashMap<&str, ZV<'_>> = HashMap::new();
             hints.insert("profile", ZV::from("full"));
             if px

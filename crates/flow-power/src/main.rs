@@ -62,7 +62,11 @@ struct Shared {
 }
 
 async fn upower(conn: &zbus::Connection) -> Option<(f32, bool)> {
-    let p = dbus::UPowerDisplayProxy::new(conn).await.ok()?;
+    let p = dbus::UPowerDisplayProxy::builder(conn)
+        .cache_properties(zbus::proxy::CacheProperties::No)
+        .build()
+        .await
+        .ok()?;
     if !p.is_present().await.ok()? {
         return None;
     }
@@ -155,7 +159,11 @@ async fn dispatch(sh: &Shared, m: &str, p: Value) -> ipc::RpcResult {
             let batt = sysfs::battery(&sh.sysroot);
             let bl = sysfs::backlight(&sh.sysroot);
             let profile = match &sh.system {
-                Some(c) => match dbus::PowerProfilesProxy::new(c).await {
+                Some(c) => match dbus::PowerProfilesProxy::builder(c)
+                    .cache_properties(zbus::proxy::CacheProperties::No)
+                    .build()
+                    .await
+                {
                     Ok(p) => p.active_profile().await.ok(),
                     Err(_) => None,
                 },
@@ -180,7 +188,9 @@ async fn dispatch(sh: &Shared, m: &str, p: Value) -> ipc::RpcResult {
                 .system
                 .as_ref()
                 .ok_or_else(|| RpcError::unavailable("system bus not available"))?;
-            let px = dbus::PowerProfilesProxy::new(c)
+            let px = dbus::PowerProfilesProxy::builder(c)
+                .cache_properties(zbus::proxy::CacheProperties::No)
+                .build()
                 .await
                 .map_err(|e| RpcError::unavailable(e.to_string()))?;
             px.set_active_profile(&p.profile)
@@ -205,7 +215,9 @@ async fn dispatch(sh: &Shared, m: &str, p: Value) -> ipc::RpcResult {
                 .system
                 .as_ref()
                 .ok_or_else(|| RpcError::unavailable("system bus not available"))?;
-            let s = dbus::Login1SessionProxy::new(c)
+            let s = dbus::Login1SessionProxy::builder(c)
+                .cache_properties(zbus::proxy::CacheProperties::No)
+                .build()
                 .await
                 .map_err(|e| RpcError::unavailable(e.to_string()))?;
             // Never go fully black via this API: floor at 1 raw step.
@@ -261,7 +273,11 @@ async fn idle_tick(sh: &Shared) -> Duration {
         sh.bus.emit("power.idle_action", json!({"action": a}));
         if suspend {
             if let Some(c) = &sh.system {
-                if let Ok(l) = dbus::Login1Proxy::new(c).await {
+                if let Ok(l) = dbus::Login1Proxy::builder(c)
+                    .cache_properties(zbus::proxy::CacheProperties::No)
+                    .build()
+                    .await
+                {
                     if let Err(e) = l.suspend(false).await {
                         tracing::warn!("suspend failed: {e}");
                     }

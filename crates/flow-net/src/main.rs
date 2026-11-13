@@ -97,7 +97,9 @@ async fn radios(sh: &Shared) -> Result<Radios, RpcError> {
         .conn
         .as_ref()
         .ok_or_else(|| RpcError::unavailable("system bus not available"))?;
-    let nm = NetworkManagerProxy::new(c)
+    let nm = NetworkManagerProxy::builder(c)
+        .cache_properties(zbus::proxy::CacheProperties::No)
+        .build()
         .await
         .map_err(|e| RpcError::unavailable(e.to_string()))?;
     Ok(Radios {
@@ -114,7 +116,9 @@ async fn apply(sh: &Shared, r: Radios) -> Result<(), RpcError> {
         .conn
         .as_ref()
         .ok_or_else(|| RpcError::unavailable("system bus not available"))?;
-    let nm = NetworkManagerProxy::new(c)
+    let nm = NetworkManagerProxy::builder(c)
+        .cache_properties(zbus::proxy::CacheProperties::No)
+        .build()
         .await
         .map_err(|e| RpcError::unavailable(e.to_string()))?;
     nm.set_wireless_enabled(r.wifi)
@@ -142,7 +146,11 @@ async fn dispatch(sh: &Shared, m: &str, p: Value) -> ipc::RpcResult {
         "net.status" => {
             let mut out = json!({"nm": false, "modem_manager": false, "airplane": sh.air.lock().unwrap().active});
             if let Some(c) = &sh.conn {
-                if let Ok(nm) = NetworkManagerProxy::new(c).await {
+                if let Ok(nm) = NetworkManagerProxy::builder(c)
+                    .cache_properties(zbus::proxy::CacheProperties::No)
+                    .build()
+                    .await
+                {
                     if let Ok(st) = nm.state().await {
                         out["nm"] = json!(true);
                         out["state"] = json!(nm_state(st));
@@ -154,7 +162,11 @@ async fn dispatch(sh: &Shared, m: &str, p: Value) -> ipc::RpcResult {
                         out["networking_enabled"] = json!(nm.networking_enabled().await.ok());
                     }
                 }
-                if let Ok(mm) = ModemObjectsProxy::new(c).await {
+                if let Ok(mm) = ModemObjectsProxy::builder(c)
+                    .cache_properties(zbus::proxy::CacheProperties::No)
+                    .build()
+                    .await
+                {
                     if let Ok(objs) = mm.get_managed_objects().await {
                         out["modem_manager"] = json!(true);
                         out["modems"] = json!(objs.len());

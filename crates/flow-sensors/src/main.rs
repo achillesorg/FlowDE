@@ -74,7 +74,11 @@ fn snapshot(st: &State) -> SensorSnapshot {
 
 async fn claim(sh: &Shared, on: bool) {
     let Some(c) = &sh.conn else { return };
-    let Ok(p) = SensorProxyProxy::new(c).await else {
+    let Ok(p) = SensorProxyProxy::builder(c)
+        .cache_properties(zbus::proxy::CacheProperties::No)
+        .build()
+        .await
+    else {
         return;
     };
     let has = sh.st.lock().unwrap().has;
@@ -101,7 +105,11 @@ async fn sample(sh: &Shared) {
     let mut rotated = None;
     let mut sugg = None;
     if let Some(c) = &sh.conn {
-        if let Ok(p) = SensorProxyProxy::new(c).await {
+        if let Ok(p) = SensorProxyProxy::builder(c)
+            .cache_properties(zbus::proxy::CacheProperties::No)
+            .build()
+            .await
+        {
             let has = sh.st.lock().unwrap().has;
             let orient = if has.0 {
                 p.accelerometer_orientation().await.ok()
@@ -223,7 +231,11 @@ async fn run() -> flow_common::Result<()> {
     let conn = zbus::Connection::system().await.ok();
     let mut st = State::default();
     if let Some(c) = &conn {
-        if let Ok(p) = SensorProxyProxy::new(c).await {
+        if let Ok(p) = SensorProxyProxy::builder(c)
+            .cache_properties(zbus::proxy::CacheProperties::No)
+            .build()
+            .await
+        {
             st.has = (
                 p.has_accelerometer().await.unwrap_or(false),
                 p.has_ambient_light().await.unwrap_or(false),

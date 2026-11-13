@@ -79,10 +79,10 @@ async fn refresh(sh: &Shared) {
         let (Ok(root), Ok(pl)) = (
             RootProxy::builder(c)
                 .destination(bus.clone())
-                .map(|b| b.build()),
+                .map(|b| b.cache_properties(zbus::proxy::CacheProperties::No).build()),
             PlayerIfaceProxy::builder(c)
                 .destination(bus.clone())
-                .map(|b| b.build()),
+                .map(|b| b.cache_properties(zbus::proxy::CacheProperties::No).build()),
         ) else {
             continue;
         };
@@ -136,6 +136,7 @@ async fn send_key(sh: &Shared, k: Key) -> ipc::RpcResult {
     let pl = PlayerIfaceProxy::builder(c)
         .destination(format!("{MPRIS_PREFIX}{id}"))
         .map_err(|e| RpcError::unavailable(e.to_string()))?
+        .cache_properties(zbus::proxy::CacheProperties::No)
         .build()
         .await
         .map_err(|e| RpcError::unavailable(e.to_string()))?;

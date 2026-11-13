@@ -59,6 +59,19 @@ pub fn default_units() -> Vec<Unit> {
     ]
 }
 
+/// Remove disabled units and drop them from the remaining units' `after`
+/// lists (a disabled dependency is not an error).
+pub fn without(units: Vec<Unit>, disabled: &[String]) -> Vec<Unit> {
+    units
+        .into_iter()
+        .filter(|u| !disabled.contains(&u.name))
+        .map(|mut u| {
+            u.after.retain(|a| !disabled.contains(a));
+            u
+        })
+        .collect()
+}
+
 /// Topological start order (Kahn). Errors on cycles or unknown dependencies.
 pub fn order(units: &[Unit]) -> Result<Vec<String>, String> {
     let names: Vec<&str> = units.iter().map(|u| u.name.as_str()).collect();
@@ -219,6 +232,18 @@ mod tests {
         assert!(pos("flow-settings") < pos("flow-theme"));
         assert!(pos("flow-theme") < pos("kiln-wall"));
         assert!(pos("flow-power") < pos("flow-haptics"));
+    }
+
+    #[test]
+    fn disabled_dependencies_are_pruned() {
+        let units = without(
+            default_units(),
+            &["flow-power".to_string(), "flow-sensors".to_string()],
+        );
+        assert!(order(&units).is_ok());
+        let h = units.iter().find(|u| u.name == "flow-haptics").unwrap();
+        assert!(h.after.is_empty());
+        assert!(units.iter().all(|u| u.name != "flow-power"));
     }
 
     #[test]

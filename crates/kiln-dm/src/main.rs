@@ -112,7 +112,9 @@ async fn dispatch(sh: &Shared, m: &str, p: Value) -> ipc::RpcResult {
                 .conn
                 .as_ref()
                 .ok_or_else(|| RpcError::unavailable("system bus not available"))?;
-            let px = Login1Proxy::new(c)
+            let px = Login1Proxy::builder(c)
+                .cache_properties(zbus::proxy::CacheProperties::No)
+                .build()
                 .await
                 .map_err(|e| RpcError::unavailable(e.to_string()))?;
             let l = px

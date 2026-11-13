@@ -66,6 +66,7 @@ async fn run_unit(sh: Arc<Shared>, name: String, stop: Arc<Notify>) {
         let started = Instant::now();
         let mut child = match tokio::process::Command::new(&bin)
             .kill_on_drop(true)
+            .envs(malloc_env())
             .spawn()
         {
             Ok(c) => c,
@@ -204,10 +205,7 @@ fn main() {
     flow_common::daemon::run_daemon("flowd", |bus| async move {
         let cfg: Config =
             flow_common::config::load(&flow_common::paths::config_file("flow-session"), 1, &[])?;
-        let units: Vec<Unit> = default_units()
-            .into_iter()
-            .filter(|u| !cfg.disabled.contains(&u.name))
-            .collect();
+        let units: Vec<Unit> = without(default_units(), &cfg.disabled);
         let ord = order(&units).map_err(flow_common::FlowError::Config)?;
         let mut slots = BTreeMap::new();
         for n in &ord {
@@ -253,4 +251,18 @@ fn main() {
         });
         Ok((h, vec![boot]))
     });
+}
+
+/// Keep small daemons small: single malloc arena and a fixed mmap threshold so
+/// freed large buffers (e.g. argon2's 19 MiB) go back to the OS. Only set when
+/// the user has not set them.
+fn malloc_env() -> Vec<(&'static str, &'static str)> {
+    [
+        ("MALLOC_ARENA_MAX", "1"),
+        ("MALLOC_MMAP_THRESHOLD_", "131072"),
+        ("MALLOC_TRIM_THRESHOLD_", "131072"),
+    ]
+    .into_iter()
+    .filter(|(k, _)| std::env::var_os(k).is_none())
+    .collect()
 }
