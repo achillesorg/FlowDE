@@ -1,6 +1,6 @@
 //! Package backends: apt (read via apt-cache/dpkg-query, privileged steps via
 //! pkexec) and Flatpak (CLI). Same model and command lines as the Kiln Store
-//! app (/Users/xavi/fedeos/kiln-apps/kiln-store, `kiln_store/backends.py`), so
+//! app (kiln-apps/kiln-store, `kiln_store/backends.py`), so
 //! the app can later become a thin client of this daemon.
 //! PackageKit is a possible later backend (TODO(feature)).
 
