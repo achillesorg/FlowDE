@@ -1,8 +1,9 @@
 # FlowDE
 
 FlowDE is a mobile desktop environment for Linux phones (Debian, Fedora and
-postmarketOS style systems, aarch64 first). This repository currently contains
-**only the services/backend layer**; there is no shell UI yet.
+postmarketOS style systems, aarch64 first). This repository holds the services/backend layer (`crates/`),
+a Qt 6/QML shell prototype (`shell/`) and a nested Smithay mobile compositor
+(`compositor/`). Everything is an early prototype.
 
 Goals: optimised for a phone (tiny daemons, idle means idle), a proper
 "liquid glass" default look (original implementation, see
