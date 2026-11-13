@@ -62,7 +62,7 @@ void main() {
     float lum = dot(c, vec3(0.299, 0.587, 0.114));
     c = mix(vec3(lum), c, 1.25);
     float adapt = mix(lum, 1.0 - lum, dark);
-    c = mix(c, tint.rgb, clamp(tint.a + tintAmount * adapt, 0.0, 0.95));
+    c = mix(c, tint.rgb / max(tint.a, 0.001), clamp(tint.a + tintAmount * adapt, 0.0, 0.95));  // Qt colors are premultiplied
 
     if (quality < 0.5) {
         // specular rim: key light from top-left, soft fill bottom-right

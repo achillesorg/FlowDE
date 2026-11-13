@@ -4,11 +4,12 @@ import FlowShell
 Item {
     id: root
     height: 40
+    property color ink: Theme.onWall
     property date now: new Date()
     Timer { interval: 10000; running: true; repeat: true; onTriggered: root.now = new Date() }
     Text {
         x: 28; anchors.verticalCenter: parent.verticalCenter
-        text: Qt.formatTime(root.now, "hh:mm"); color: Theme.text
+        text: Qt.formatTime(root.now, "hh:mm"); color: root.ink
         font.pixelSize: 15; font.weight: Font.DemiBold; font.family: Theme.font
     }
     Row {
@@ -19,12 +20,12 @@ Item {
             spacing: 2; anchors.verticalCenter: parent.verticalCenter
             Repeater { model: 4
                 Rectangle { width: 3.5; height: 5 + index * 3; radius: 1; anchors.bottom: parent.bottom
-                    color: Theme.text; opacity: (Services.airplane ? 0 : index < Services.signal) ? 1 : 0.28 } }
+                    color: root.ink; opacity: (Services.airplane ? 0 : index < Services.signal) ? 1 : 0.28 } }
         }
         // wifi: three arcs
         Canvas {
             width: 18; height: 14; anchors.verticalCenter: parent.verticalCenter
-            property color ink: Theme.text
+            property color ink: root.ink
             property bool on: Services.wifi && !Services.airplane
             onInkChanged: requestPaint(); onOnChanged: requestPaint()
             onPaint: {
@@ -38,12 +39,12 @@ Item {
         // battery
         Row {
             spacing: 4; anchors.verticalCenter: parent.verticalCenter
-            Text { text: Services.battery; color: Theme.text; font.pixelSize: 12; anchors.verticalCenter: parent.verticalCenter; font.family: Theme.font }
+            Text { text: Services.battery; color: root.ink; font.pixelSize: 12; anchors.verticalCenter: parent.verticalCenter; font.family: Theme.font }
             Rectangle {
-                width: 26; height: 13; radius: 4; color: "transparent"; border.width: 1.4; border.color: Theme.text
+                width: 26; height: 13; radius: 4; color: "transparent"; border.width: 1.4; border.color: root.ink
                 anchors.verticalCenter: parent.verticalCenter
                 Rectangle { x: 2; y: 2; height: parent.height - 4; width: (parent.width - 4) * Services.battery / 100; radius: 2
-                    color: Services.charging ? "#34c759" : (Services.battery < 20 ? "#ff453a" : Theme.text) }
+                    color: Services.charging ? "#34c759" : (Services.battery < 20 ? "#ff453a" : root.ink) }
             }
         }
     }

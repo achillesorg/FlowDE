@@ -39,6 +39,7 @@ void AppModel::reload() {
             if (s.value("Type").toString() != "Application") continue;
             if (s.value("NoDisplay").toBool() || s.value("Hidden").toBool()) continue;
             QString name = s.value("Name").toString();
+            name.replace(QRegularExpression("fede", QRegularExpression::CaseInsensitiveOption), "Glaze");  // renamed project; never show the old name
             QString exec = s.value("Exec").toString();
             if (name.isEmpty() || exec.isEmpty()) continue;
             seen.insert(fi.fileName());

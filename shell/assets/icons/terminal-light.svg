@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+<title>Terminal</title>
+<g fill="none" stroke="#FAF9F5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<rect class="glaze-fill" x="3.5" y="4.5" width="17" height="15" rx="1.5" fill="#FAF9F5" fill-opacity="0" stroke="none"/>
+<rect x="3.5" y="4.5" width="17" height="15" rx="1.5"/>
+<path d="M7.5 9.5L10.5 12L7.5 14.5"/>
+<path d="M12.5 15H16.5"/>
+</g></svg>

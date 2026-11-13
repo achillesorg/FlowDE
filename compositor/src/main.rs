@@ -625,7 +625,6 @@ mod linux {
             self.s.as_fd()
         }
     }
-    use std::os::fd::AsFd;
 
     fn start_control(handle: &LoopHandle<'static, State>, path: &PathBuf) -> io::Result<()> {
         let _ = std::fs::remove_file(path);

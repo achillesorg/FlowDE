@@ -7,8 +7,8 @@ GlassPanel {
     property string glyph: ""
     property bool active: false
     signal toggled
-    radius: Math.min(width, height) * 0.36
-    Rectangle { anchors.fill: parent; radius: root.radius; color: Theme.accent; opacity: root.active ? 0.85 : 0
+    radius: Theme.paper ? Theme.radius : Math.min(width, height) * 0.36
+    Rectangle { anchors.fill: parent; radius: root.radius; color: Theme.accent; opacity: root.active ? 1 : 0
         Behavior on opacity { NumberAnimation { duration: Theme.animMs / 2 } } }
     Column {
         anchors.centerIn: parent; spacing: 4

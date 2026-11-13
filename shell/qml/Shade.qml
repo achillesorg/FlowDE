@@ -9,7 +9,7 @@ Item {
     y: -(1 - progress) * height
     GlassPanel {
         anchors.fill: parent; radius: 0; blurRadius: Theme.blurPx * 1.4; refraction: 0; tintStrength: 0.08
-        flatOpaque: true
+        flatOpaque: true; outline: false
         // bottom edge radius cap
     }
     Column {
@@ -55,5 +55,5 @@ Item {
         }
     }
     Rectangle { anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 14 }
-        width: 44; height: 5; radius: 3; color: Theme.text; opacity: 0.5 }
+        width: 44; height: 5; radius: 3; color: Theme.text; opacity: 0.4 }
 }

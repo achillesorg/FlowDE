@@ -1,30 +1,30 @@
 import QtQuick
 import FlowShell
 
-// THE glass surface. Every surface in the shell is a GlassPanel.
-// `backdrop` is a shared pre-downsampled ShaderEffectSource of the wallpaper (set by Main).
-// Ladder: Theme.quality 0 = blur+lensing+specular, 1 = blur only, 2 = flat translucent rect.
+// Surface component used by every panel. In the default theme (anthropic-glass-icons) surfaces are FLAT
+// PAPER: 1px hairline stroke, small radius, no blur, no shadow. In the LiquidGlass theme the same component
+// runs the glass shader (blur + lensing + specular + adaptive tint). Ladder: Theme.quality 0 full, 1 blur, 2 flat.
 Item {
     id: root
     property real radius: Theme.radius
     property real blurRadius: Theme.blurPx
     property real refraction: Theme.refractPx
-    property real tintStrength: 0.0           // extra adaptive tint (0..1)
-    property var backdrop: Theme.backdrop       // ShaderEffectSource
-    property Item backdropItem: Theme.backdropItem // item whose coordinate space the source covers
+    property real tintStrength: 0.0
+    property var backdrop: Theme.backdrop
+    property Item backdropItem: Theme.backdropItem
     property bool flatOpaque: false
+    property bool outline: true
     default property alias content: holder.data
 
     readonly property bool useShader: Theme.quality < 2 && backdrop && backdropItem
 
-    // flat fallback (also used by non-glass themes)
     Rectangle {
         anchors.fill: parent
         visible: !root.useShader
         radius: root.radius
         color: root.flatOpaque ? Theme.card : Theme.flatSurface
-        border.width: Theme.name === "Minimalist" ? 1 : 0
-        border.color: Theme.dark ? "#33ffffff" : "#22000000"
+        border.width: root.outline && Theme.paper ? 1 : 0
+        border.color: Theme.hairline
     }
 
     ShaderEffect {
@@ -33,8 +33,7 @@ Item {
         visible: root.useShader
         property vector2d size: Qt.vector2d(width, height)
         property vector2d origin: {
-            // re-evaluate when moved: depend on scene position through x/y of ancestors
-            root.x; root.y; root.parent ? root.parent.x : 0; root.parent ? root.parent.y : 0; root.width;
+            root.x; root.y; root.parent ? root.parent.x : 0; root.parent ? root.parent.y : 0; root.width; Theme.scrollTick
             if (!root.backdropItem) return Qt.vector2d(0, 0)
             const p = root.mapToItem(root.backdropItem, 0, 0)
             return Qt.vector2d(p.x, p.y)
