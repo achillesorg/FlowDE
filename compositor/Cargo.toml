@@ -1,0 +1,37 @@
+[package]
+name = "flowde-compositor"
+description = "FlowDE mobile compositor: single-app fullscreen, edge-swipe gestures, rotation, touch routing (Smithay 0.7)."
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+# Standalone: not a member of agent F's workspace. See docs/mobile-needs-from-fede.md for why this
+# does not depend on fede-compositor/fede-wm by path (yet).
+[workspace]
+
+[lib]
+name = "flowde_compositor"
+path = "src/lib.rs"
+
+[[bin]]
+name = "flowde-compositor"
+path = "src/main.rs"
+
+[dependencies]
+serde_json = "1"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+smithay = { version = "0.7", default-features = false, features = [
+    "wayland_frontend", "desktop", "backend_winit", "renderer_gl", "backend_egl",
+] }
+calloop = { version = "0.14", features = ["signals"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[profile.dev]
+debug = 0
+opt-level = 1
+
+[profile.release]
+debug = 0
+opt-level = 2

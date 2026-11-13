@@ -1,0 +1,3 @@
+Wallpapers: FeDe / Kiln "kiln" (light) and "night-paper" (dark) sets, original artwork, MIT OR Apache-2.0.
+Icons: FeDe "ink" stroke-1.5 icon set (original), rasterised to PNG by tools/prep-assets.sh. MIT OR Apache-2.0.
+Source: /fede/assets (read-only reference); see fede/assets/wallpapers/LICENSE.md.
