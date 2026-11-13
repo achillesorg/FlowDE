@@ -258,7 +258,7 @@ pub fn default_pack(theme: crate::themes::ThemeKind) -> &'static str {
         LiquidGlass => "flow-glass",
         Minimalist => "flow-line",
         MaterialYou => "flow-filled",
-        AnthropicDesign => "fede-ink",
+        AnthropicDesign => "glaze-ink",
     }
 }
 
@@ -269,8 +269,8 @@ pub const CANDIDATES: &[(&str, &str)] = &[
         "original FlowDE glass pack (future work, MIT)",
     ),
     (
-        "fede-ink",
-        "FeDe ink-outline set by the same author (user's own work)",
+        "glaze-ink",
+        "Glaze ink-outline set by the same author (user's own work)",
     ),
     (
         "Adwaita",
@@ -383,7 +383,7 @@ mod tests {
     #[test]
     fn theme_defaults() {
         use crate::themes::ThemeKind;
-        assert_eq!(default_pack(ThemeKind::AnthropicDesign), "fede-ink");
+        assert_eq!(default_pack(ThemeKind::AnthropicDesign), "glaze-ink");
         assert_eq!(default_pack(ThemeKind::LiquidGlass), "flow-glass");
     }
 }

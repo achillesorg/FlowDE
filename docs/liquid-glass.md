@@ -68,7 +68,7 @@ longest battery life.
 | `liquid-glass` (default) | above | blur + lens at Full |
 | `minimalist` | white/black neutrals, one accent (text on accent picks black or white by contrast), 8 px radius, no shadow | flat |
 | `material-you` | dynamic colour from a seed (wallpaper dominant colour via kiln-wall, or the accent), 16 px radius | flat |
-| `anthropic-design` | FeDe Clay: cream `#F3EFE6`/ink `#2B2926`, terracotta `#D97757`, 1 px hairlines, 5 px controls, zero-blur offset shadow | flat |
+| `anthropic-design` | Glaze Clay: cream `#F3EFE6`/ink `#2B2926`, terracotta `#D97757`, 1 px hairlines, 5 px controls, zero-blur offset shadow | flat |
 
 All four emit the same colour roles (`canvas`, `surface`, `surface_raised`,
 `surface_sunken`, `border`, `text_primary`, `text_secondary`, `accent`,
@@ -98,10 +98,10 @@ and each `$XDG_DATA_DIRS/icons` and `.../flowde/icon-packs`, with `Inherits`
 fallback ending in hicolor. A pack declares optional `X-Flow-Style`
 (glass/line/filled/ink), `X-Flow-License`, `X-Flow-Recolor=true`. Selection:
 `appearance.icon_pack` (`auto` = the theme's default: flow-glass, flow-line,
-flow-filled, fede-ink), per-app override, fallback Adwaita then hicolor.
+flow-filled, glaze-ink), per-app override, fallback Adwaita then hicolor.
 Candidates (none bundled or downloaded): an original Flow glass pack (future),
-the FeDe ink-outline set at `fede/assets/icons/ink` (the author's own, 3 weights,
-could ship as `fede-ink` with credit), Adwaita (LGPL-3.0/CC-BY-SA-3.0, fallback),
+the Glaze ink-outline set at `glaze/assets/icons/ink` (the author's own, 3 weights,
+could ship as `glaze-ink` with credit), Adwaita (LGPL-3.0/CC-BY-SA-3.0, fallback),
 Papirus (GPL-3.0, optional, user installs it).
 
 ## Reference shader

@@ -1,6 +1,6 @@
 //! kiln-desktop-mode daemon. Polls DRM connector status (cheap sysfs reads,
 //! fast only while a dock is settling) and drives the controller. Starting the
-//! FeDe session runs the configured command; input redirection is an event
+//! Glaze session runs the configured command; input redirection is an event
 //! (`desktop.input_redirect`) the compositor handles.
 
 use flow_common::daemon::now_s;
@@ -26,7 +26,7 @@ impl Default for Config {
         Self {
             policy: Policy::Ask,
             require_power: false,
-            start_command: "fede-session --output {output}".into(),
+            start_command: "glaze-session --output {output}".into(),
         }
     }
 }

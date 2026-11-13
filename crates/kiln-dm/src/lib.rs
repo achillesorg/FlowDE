@@ -12,7 +12,7 @@ use std::path::Path;
 
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct Session {
-    /// File stem, e.g. `flowde`, `fede`.
+    /// File stem, e.g. `flowde`, `glaze`.
     pub id: String,
     pub name: String,
     pub exec: String,
@@ -320,27 +320,27 @@ mod tests {
         )
         .unwrap();
         std::fs::write(
-            w.join("fede.desktop"),
-            "[Desktop Entry]\nName=FeDe\nExec=fede-session\n",
+            w.join("glaze.desktop"),
+            "[Desktop Entry]\nName=Glaze\nExec=glaze-session\n",
         )
         .unwrap();
         let s = scan_sessions(&[&d]);
         let ids: Vec<_> = s.iter().map(|x| x.id.as_str()).collect();
-        assert_eq!(ids, vec!["fede", "flowde"]);
+        assert_eq!(ids, vec!["glaze", "flowde"]);
         assert_eq!(s[1].desktop_names, vec!["FlowDE"]);
         std::fs::remove_dir_all(d).unwrap();
     }
 
     #[test]
     fn config_rules() {
-        let avail = vec![sess("fede"), sess("flowde")];
+        let avail = vec![sess("glaze"), sess("flowde")];
         let mut c = Config {
             default_session: Some("flowde".into()),
             ..Default::default()
         };
         assert_eq!(c.preselect("u", &avail).unwrap().id, "flowde");
-        c.last_session.insert("u".into(), "fede".into());
-        assert_eq!(c.preselect("u", &avail).unwrap().id, "fede");
+        c.last_session.insert("u".into(), "glaze".into());
+        assert_eq!(c.preselect("u", &avail).unwrap().id, "glaze");
         assert_eq!(c.preselect("other", &avail).unwrap().id, "flowde");
         c.autologin_user = Some("root".into());
         assert!(c.validate().is_err());
@@ -404,6 +404,6 @@ mod tests {
         assert!(
             valid_user("alice_1") && !valid_user("Alice") && !valid_user("a b") && !valid_user("")
         );
-        assert!(valid_session_id("fede-x.y") && !valid_session_id("a/b"));
+        assert!(valid_session_id("glaze-x.y") && !valid_session_id("a/b"));
     }
 }

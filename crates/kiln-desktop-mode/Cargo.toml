@@ -1,6 +1,6 @@
 [package]
 name = "kiln-desktop-mode"
-description = "KilnDesktop backend: dock detection, policy and handover to the FeDe desktop session"
+description = "KilnDesktop backend: dock detection, policy and handover to the Glaze desktop session"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

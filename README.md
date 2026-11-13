@@ -7,7 +7,7 @@ postmarketOS style systems, aarch64 first). This repository currently contains
 Goals: optimised for a phone (tiny daemons, idle means idle), a proper
 "liquid glass" default look (original implementation, see
 [docs/liquid-glass.md](docs/liquid-glass.md)), and a clean crossover with
-[FeDe](https://github.com/achillesorg) (the desktop sibling; KilnDesktop hands
+[Glaze](https://github.com/achillesorg) (the desktop sibling; KilnDesktop hands
 over to it when a phone is docked).
 
 ## Status
@@ -26,7 +26,7 @@ list and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the design.
 | `kiln-lock` | lock state machine, argon2id passcode, biometric hook |
 | `kiln-dm` | display-manager backend (sessions, autologin policy, greeter state machine) |
 | `kiln-wall` | wallpaper service, rotation, dominant colour seed |
-| `kiln-desktop-mode` | KilnDesktop: dock detection and FeDe handover |
+| `kiln-desktop-mode` | KilnDesktop: dock detection and Glaze handover |
 | `noxal-ai` | local Qwen-based assistant with safe tool layer |
 | `flow-power` / `flow-net` / `flow-sensors` / `flow-haptics` | hardware services |
 | `flow-settings` | typed settings store with schema |

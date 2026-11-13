@@ -206,7 +206,7 @@ mod tests {
         t.apply_setting("appearance.theme", &json!("anthropic-design"));
         let (tk, pack) = t.tokens_for(None, 1);
         assert_eq!(tk.theme, ThemeKind::AnthropicDesign);
-        assert_eq!(pack, "hicolor"); // fede-ink not installed in an empty registry
+        assert_eq!(pack, "hicolor"); // glaze-ink not installed in an empty registry
         t.overrides.insert(
             "org.kiln.Store".into(),
             AppOverride {

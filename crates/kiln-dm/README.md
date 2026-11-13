@@ -7,7 +7,7 @@ KilnDM: session catalogue (wayland-sessions/xsessions), autologin and preselecti
 ## TODO(feature)
 
 - PAM authentication backend (Auth trait) running as root
-- Session launcher: setuid, logind session, XDG env, start FlowDE/FeDe
+- Session launcher: setuid, logind session, XDG env, start FlowDE/Glaze
 - Greeter UI protocol over a root-owned socket
-- Real FlowDE/FeDe handover (switch or second session)
+- Real FlowDE/Glaze handover (switch or second session)
 - Lock-screen unlock via PAM

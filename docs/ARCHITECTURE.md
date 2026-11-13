@@ -26,7 +26,7 @@ exists it is listed too.
 | `flow-camera` | `flow-camera` | - (portal TODO) | - |
 | `flow-store` | `flow-store` | - | apt-cache, pkexec apt-get, flatpak |
 | `flow-dlp` | `flow-dlp` | - | yt-dlp (optionally under bubblewrap) |
-| `kiln-desktop-mode` | `kiln-desktop-mode` | - (DRM sysfs) | follows flow-power; starts FeDe session |
+| `kiln-desktop-mode` | `kiln-desktop-mode` | - (DRM sysfs) | follows flow-power; starts Glaze session |
 | `noxal-ai` | `noxal-ai` | session: `org.flowde.Noxal1` | inference child process; tool calls to other daemons |
 | `kiln-dm` | `kiln-dm` | system: logind (read) | system service, see security |
 
@@ -93,8 +93,8 @@ not measured.
 
 ## Interface themes, icon packs and the quality ladder
 
-`flow-theme` resolves one token structure (colour roles named like FeDe's
-`fede-design` `ThemeRole` keys, geometry, shadow, optional glass material) for
+`flow-theme` resolves one token structure (colour roles named like Glaze's
+`glaze-design` `ThemeRole` keys, geometry, shadow, optional glass material) for
 four selectable interface themes: `liquid-glass` (default), `minimalist`,
 `material-you`, `anthropic-design`. Only liquid-glass uses backdrop work; the
 others are flat and cost nothing at render time. Icon packs are independent of
@@ -135,17 +135,17 @@ the interface theme (each theme only provides a default). Per-app overrides
 - Untrusted input is bounded: IPC lines 1 MiB, ICS 4 MiB, images 64 MiB and
   16384 px, notification text 4096 chars, history 200 items.
 
-## Crossover with FeDe
+## Crossover with Glaze
 
-- Colour role names in `flow-theme` match `fede-design` so a shared design crate
-  can replace the theme tables; the `anthropic-design` theme carries FeDe Clay's
+- Colour role names in `flow-theme` match `glaze-design` so a shared design crate
+  can replace the theme tables; the `anthropic-design` theme carries Glaze Clay's
   palette (copied with credit, docs/CREDITS.md).
 - KilnDesktop: `kiln-desktop-mode` watches DRM connectors, applies the policy
-  (auto / ask / never), starts the configured FeDe session command on the
+  (auto / ask / never), starts the configured Glaze session command on the
   external output and emits `desktop.input_redirect` for the compositor. The
   phone shell keeps running. `kiln-dm` lists both sessions and records handover
   requests.
-- Shared services: FeDe can use the same `flow-*` sockets (settings, theme,
+- Shared services: Glaze can use the same `flow-*` sockets (settings, theme,
   notifs, media). The Kiln Store app is intended to become a client of
   `flow-store` (same data model and commands).
 

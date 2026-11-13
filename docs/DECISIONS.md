@@ -17,7 +17,7 @@ file and the code together. "Open" items need the user.
 | 10 | Passcode | argon2id 19 MiB / t=2 / p=1 (OWASP minimum) | phones can afford it; params are embedded in the PHC string so they can be raised later |
 | 11 | Lock enforcement | kiln-lock is policy and state; compositor enforces | a daemon cannot lock a Wayland session by itself |
 | 12 | Interface themes | Four selectable themes resolved into one token struct: `liquid-glass` (default), `minimalist`, `material-you`, `anthropic-design` | user feature list |
-| 13 | Anthropic Design | = FeDe Clay (flat cut paper, cream/terracotta/ink, hairlines, zero-blur offset shadow); colour role names identical to `fede-design` | lets a shared crate replace this later |
+| 13 | Anthropic Design | = Glaze Clay (flat cut paper, cream/terracotta/ink, hairlines, zero-blur offset shadow); colour role names identical to `glaze-design` | lets a shared crate replace this later |
 | 14 | MaterialYou | Original tonal-palette maths in CIE L*a*b*/LCh (tone = L*) as an HCT stand-in, gamut-clamped chroma; no Google code or tables | CAM16 can replace the Lab step later without API change. Light/dark and standard/medium/high contrast supported |
 | 15 | Icon packs | Independent of interface theme; freedesktop theme discovery with `Inherits` chain to hicolor; theme only supplies a default pack id; `appearance.icon_pack` + per-app override | user answer "icon packs". FlowDE extension keys `X-Flow-Style/License/Recolor` in index.theme |
 | 16 | Quality ladder | full lensing -> blur only -> flat; down immediately, up one step after 10 s stable (hysteresis) | avoids flapping near battery/thermal limits and shader recompiles |

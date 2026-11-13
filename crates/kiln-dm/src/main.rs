@@ -94,7 +94,7 @@ async fn dispatch(sh: &Shared, m: &str, p: Value) -> ipc::RpcResult {
                 Err(e) => Err(RpcError::invalid(format!("{e:?}"))),
             }
         }
-        // Handover between FlowDE and FeDe sessions: recorded and announced; starting the
+        // Handover between FlowDE and Glaze sessions: recorded and announced; starting the
         // other session needs the privileged launcher (TODO(feature)).
         "dm.handover.request" => {
             let p: HandP = ipc::params(p)?;

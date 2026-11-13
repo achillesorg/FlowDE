@@ -1,8 +1,8 @@
 # kiln-desktop-mode
 
-KilnDesktop backend: external-connector detection (DRM sysfs), debounce, policy auto/ask/never, start/stop the FeDe session command, `desktop.input_redirect` events.
+KilnDesktop backend: external-connector detection (DRM sysfs), debounce, policy auto/ask/never, start/stop the Glaze session command, `desktop.input_redirect` events.
 
-**Status:** Controller and polling implemented and tested; launching uses the configured command (`fede-session --output {output}` by default).
+**Status:** Controller and polling implemented and tested; launching uses the configured command (`glaze-session --output {output}` by default).
 
 ## TODO(feature)
 

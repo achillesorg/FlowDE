@@ -1,5 +1,5 @@
 //! Interface themes. All four resolve into one [`Tokens`] structure whose
-//! colour-role names match FeDe's `fede-design` `ThemeRole::key()` values, so
+//! colour-role names match Glaze's `glaze-design` `ThemeRole::key()` values, so
 //! a shared design crate can replace this module later.
 
 use crate::color::{Rgb, Rgba};
@@ -65,7 +65,7 @@ pub struct Shadow {
 pub struct Tokens {
     pub theme: ThemeKind,
     pub scheme: Scheme,
-    /// Colour roles keyed like `fede-design` (`canvas`, `surface`, `accent`, ...).
+    /// Colour roles keyed like `glaze-design` (`canvas`, `surface`, `accent`, ...).
     pub palette: BTreeMap<String, Rgba>,
     pub geometry: Geometry,
     pub shadow: Shadow,
@@ -84,7 +84,7 @@ fn pal(items: &[(&str, Rgba)]) -> BTreeMap<String, Rgba> {
     items.iter().map(|(k, v)| (k.to_string(), *v)).collect()
 }
 
-/// FeDe "Clay" palette values (copied from fede-design; see docs/CREDITS.md).
+/// Glaze "Clay" palette values (copied from glaze-design; see docs/CREDITS.md).
 fn clay(dark: bool) -> BTreeMap<String, Rgba> {
     let c = |h: &str| rgb(h).with_alpha(1.0);
     if dark {
@@ -486,7 +486,7 @@ mod tests {
     }
 
     #[test]
-    fn all_themes_have_all_fede_roles() {
+    fn all_themes_have_all_glaze_roles() {
         const ROLES: [&str; 19] = [
             "canvas",
             "surface",
@@ -537,7 +537,7 @@ mod tests {
     }
 
     #[test]
-    fn anthropic_matches_fede_clay() {
+    fn anthropic_matches_glaze_clay() {
         let l = with(ThemeKind::AnthropicDesign, Scheme::Light);
         assert_eq!(l.palette["accent"].hex(), "#d97757ff");
         assert_eq!(l.palette["canvas"].hex(), "#f3efe6ff");

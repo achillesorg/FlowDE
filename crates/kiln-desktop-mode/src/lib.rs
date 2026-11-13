@@ -1,5 +1,5 @@
 //! KilnDesktop (DeX-like) backend logic: dock detection with debounce, mode
-//! policy, and the handover state machine. No UI. The FeDe session start and
+//! policy, and the handover state machine. No UI. The Glaze session start and
 //! input redirection are done through hooks (commands / events) the compositor
 //! implements; see docs/ARCHITECTURE.md.
 
@@ -197,7 +197,7 @@ impl Controller {
     }
 }
 
-/// Build the argv that starts the FeDe session on `output`. The template is
+/// Build the argv that starts the Glaze session on `output`. The template is
 /// split on whitespace (no shell); `{output}` is substituted only if the
 /// output name is a safe connector name.
 pub fn launch_argv(template: &str, output: &str) -> Option<Vec<String>> {
@@ -330,8 +330,8 @@ mod tests {
     #[test]
     fn launch_argv_safe() {
         assert_eq!(
-            launch_argv("fede-session --output {output}", "DP-1").unwrap(),
-            vec!["fede-session", "--output", "DP-1"]
+            launch_argv("glaze-session --output {output}", "DP-1").unwrap(),
+            vec!["glaze-session", "--output", "DP-1"]
         );
         assert!(launch_argv("x {output}", "DP-1; rm").is_none());
         assert!(launch_argv("", "DP-1").is_none());
