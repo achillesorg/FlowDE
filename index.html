@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="FlowDE is an early prototype of a desktop environment for Linux phones. Flat paper surfaces, real glass icons, small Rust services. Open source, MIT licensed.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<title>FlowDE, a desktop environment for your phone</title>
+</head>
+<body>
+
+<svg class="defs-only" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="lens" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="1" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+<header class="bar wrap">
+  <a class="logo" href="#top" aria-label="FlowDE home">FlowDE</a>
+  <nav aria-label="Main">
+    <a href="#glass">Glass</a>
+    <a href="#parts">Parts</a>
+    <a href="#status">Status</a>
+    <a class="gh" href="https://github.com/achillesorg/FlowDE" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="wrap hero">
+    <div class="hero-text">
+      <h1>A desktop environment for your phone.</h1>
+      <p class="lede">FlowDE is an early prototype for Linux phones. A set of small Rust services sits under a Qt shell and a Wayland compositor. Surfaces are flat paper, and the icons are glass.</p>
+      <p class="links">
+        <a class="primary" href="https://github.com/achillesorg/FlowDE" target="_blank" rel="noopener noreferrer">Read the source</a>
+        <a href="#status">See what runs today</a>
+      </p>
+    </div>
+    <figure class="device">
+      <img src="assets/prototype-home.png" alt="The FlowDE home screen prototype on a flat paper wallpaper, with glass app icons and a dock" width="540" height="1170">
+    </figure>
+  </section>
+
+  <section class="shelf" id="glass" aria-labelledby="glass-h">
+    <div class="wrap shelf-in">
+      <div class="shelf-text">
+        <h2 id="glass-h">Glass only where you touch.</h2>
+        <p>App icons are the one place FlowDE uses real glass. They bend what sits behind them and catch light along the edge. The rest of the screen is flat paper, so it needs no blur at all.</p>
+        <p class="aside">If the battery or temperature is a problem, icons drop to plain tinted tiles. The reduce-transparency setting does the same.</p>
+      </div>
+      <div class="stage" role="img" aria-label="Eight glass app icons resting on a terracotta circle, a cream square and an ink arch. The shapes behind show bent through the glass.">
+        <span class="shape circle"></span><span class="shape square"></span><span class="shape arch"></span>
+        <ul class="icons">
+          <li class="gi"><svg viewBox="0 0 24 24"><path d="M6 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></li>
+          <li class="gi"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.500" r="3.500"/><path d="M8 7l1.500-2.500h5L16 7"/></svg></li>
+          <li class="gi"><svg viewBox="0 0 24 24"><rect x="3.500" y="5" width="17" height="15.500" rx="2"/><path d="M3.500 10h17M8 3v4M16 3v4"/></svg></li>
+          <li class="gi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.500"/><path d="M12 7v5l3 2"/></svg></li>
+          <li class="gi"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2.500"/><circle cx="17" cy="16" r="2.500"/></svg></li>
+          <li class="gi"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2.500h8a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></li>
+          <li class="gi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.600 5.600l2.100 2.100M16.300 16.300l2.100 2.100M5.600 18.400l2.100-2.100M16.300 7.700l2.100-2.100"/></svg></li>
+          <li class="gi"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap block" id="parts" aria-labelledby="parts-h">
+    <h2 id="parts-h">What is inside</h2>
+    <p class="intro">FlowDE is built from small services. The shell talks to them over D-Bus and a control socket, so you can swap one out or turn it off.</p>
+    <dl class="rows">
+      <div><dt>KilnLock</dt><dd>The lock screen. It locks automatically, keeps the passcode as an Argon2id hash and has a hook for biometrics.</dd></div>
+      <div><dt>KilnNotifs</dt><dd>Notifications, with history, grouping and do-not-disturb.</dd></div>
+      <div><dt>KilnDM</dt><dd>Login and sessions. At login you choose FlowDE or the FeDe desktop.</dd></div>
+      <div><dt>KilnWall</dt><dd>Wallpapers, with light and dark variants and one per display.</dd></div>
+      <div><dt>NoxalAi</dt><dd>A local assistant based on Qwen. It runs on the phone, and only when battery and temperature allow.</dd></div>
+      <div><dt>FlowStore</dt><dd>Finds, installs and removes apps.</dd></div>
+      <div><dt>FlowDLP</dt><dd>A download queue in the style of yt-dlp, with progress and resume.</dd></div>
+      <div><dt>KilnDesktop</dt><dd>Dock the phone and it starts the full FeDe desktop, much like Samsung DeX.</dd></div>
+    </dl>
+  </section>
+
+  <section class="wrap block looks" aria-labelledby="looks-h">
+    <div>
+      <h2 id="looks-h">Four looks</h2>
+      <p class="intro">The default is minimalist paper in the style of the FeDe desktop, with glass icons. You can switch to full Liquid Glass, to Minimalist, or to MaterialYou at any time. Icon packs are a separate choice.</p>
+    </div>
+    <ul class="swatches" aria-label="Themes">
+      <li><i style="--a:#f1ece1;--b:#c9633b;--c:#28241f"></i>Paper (default)</li>
+      <li><i style="--a:#a9c2ff;--b:#ffd2b8;--c:#ffffff"></i>Liquid Glass</li>
+      <li><i style="--a:#f3f3f1;--b:#d0d0cc;--c:#222"></i>Minimalist</li>
+      <li><i style="--a:#e6dfff;--b:#6750a4;--c:#ffd9e2"></i>MaterialYou</li>
+    </ul>
+  </section>
+
+  <section class="wrap block" id="status" aria-labelledby="status-h">
+    <h2 id="status-h">Where it stands</h2>
+    <p class="intro">FlowDE is young and nothing is released.</p>
+    <div class="cols">
+      <div><h3>Exists</h3><p>A service scaffold in Rust with tests. A shell prototype with a lock screen, home screen, app switcher and notification shade. The glass icon material and four themes.</p></div>
+      <div><h3>In progress</h3><p>Real service behaviour on a device. A mobile mode for the compositor. The NoxalAi runtime.</p></div>
+      <div><h3>Not started</h3><p>Phone images and installers. The standalone apps. Packages.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>MIT License. Made by Achilles. This page has no trackers, cookies or scripts.</p>
+  <p>Liquid Glass is a trademark of Apple Inc. FlowDE is an independent project and is not affiliated with Apple.</p>
+</footer>
+</body>
+</html>
