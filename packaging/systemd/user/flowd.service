@@ -1,0 +1,17 @@
+[Unit]
+Description=flowd supervisor (only for systems without the per-daemon units)
+ConditionPathExists=!/run/systemd/system
+PartOf=flowde.target
+
+[Service]
+ExecStart=/usr/bin/flowd
+Restart=on-failure
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%S/flowde %t/flowde -%h/.config/flowde
+PrivateTmp=yes
+RestrictAddressFamilies=AF_UNIX
+
+[Install]
+WantedBy=flowde.target

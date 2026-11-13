@@ -1,0 +1,20 @@
+[package]
+name = "flow-camera"
+description = "Camera backend: device enumeration and per-app permission prompt state (no capture yet)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "flow-camera"
+path = "src/main.rs"
+
+[dependencies]
+flow-common.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tracing.workspace = true
+tokio.workspace = true

@@ -1,0 +1,122 @@
+# Built-in settings schema. Extra schemas can be dropped into
+# <config>/flowde/schema.d/*.toml (same format) by other components.
+
+[display.brightness]
+type = "float"
+default = 0.6
+min = 0.0
+max = 1.0
+description = "Manual screen brightness (0..1)"
+
+[display.auto_brightness]
+type = "bool"
+default = true
+description = "Adapt brightness to ambient light"
+
+[display.auto_rotate]
+type = "bool"
+default = true
+description = "Rotate UI with the accelerometer"
+
+[display.refresh_rate_hz]
+type = "int"
+default = 60
+min = 30
+max = 144
+description = "Target refresh rate"
+
+[appearance.scheme]
+type = "enum"
+default = "auto"
+choices = ["auto", "light", "dark"]
+description = "Colour scheme"
+
+[appearance.theme]
+type = "enum"
+default = "liquid-glass"
+choices = ["liquid-glass", "minimalist", "material-you", "anthropic-design"]
+description = "Interface theme"
+
+[appearance.icon_pack]
+type = "string"
+default = "auto"
+description = "Icon pack id (auto = default of the interface theme)"
+
+[appearance.contrast]
+type = "enum"
+default = "standard"
+choices = ["standard", "medium", "high"]
+description = "Dynamic colour contrast level"
+
+[appearance.seed]
+type = "string"
+default = "#6750a4"
+pattern = "hex_color"
+description = "Seed colour for dynamic colour (kiln-wall writes it when seed_from_wallpaper is on)"
+
+[appearance.seed_from_wallpaper]
+type = "bool"
+default = true
+
+[appearance.material]
+type = "enum"
+default = "regular"
+choices = ["regular", "clear"]
+description = "Liquid glass variant"
+
+[appearance.tinted]
+type = "bool"
+default = false
+description = "Tint glass with the accent colour"
+
+[appearance.accent]
+type = "string"
+default = "#0a84ff"
+pattern = "hex_color"
+description = "Accent colour"
+
+[accessibility.reduce_transparency]
+type = "bool"
+default = false
+
+[accessibility.increase_contrast]
+type = "bool"
+default = false
+
+[accessibility.reduce_motion]
+type = "bool"
+default = false
+
+[power.low_power_auto_pct]
+type = "int"
+default = 20
+min = 5
+max = 50
+description = "Battery percentage that enables low power mode"
+
+[power.screen_off_s]
+type = "int"
+default = 30
+min = 10
+max = 600
+
+[lock.auto_lock_s]
+type = "int"
+default = 30
+min = 0
+max = 3600
+description = "Seconds of screen-off before locking (0 = immediately)"
+
+[notifications.dnd]
+type = "bool"
+default = false
+
+[haptics.enabled]
+type = "bool"
+default = true
+
+[haptics.intensity]
+type = "float"
+default = 1.0
+min = 0.0
+max = 1.0

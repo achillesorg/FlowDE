@@ -1,0 +1,40 @@
+[Unit]
+Description=FlowDE app registry and launcher
+PartOf=flowde.target
+After=dbus.socket
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/flow-apps
+Restart=on-failure
+RestartSec=1
+RestartSteps=5
+RestartMaxDelaySec=30
+MemoryMax=32M
+TasksMax=64
+CPUWeight=50
+Nice=5
+# Sandboxing: no root, no new privileges, read-only system, writable only own state.
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%S/flowde %t/flowde -%h/.config/flowde
+StateDirectory=flowde
+RuntimeDirectory=flowde
+RuntimeDirectoryPreserve=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+LockPersonality=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+CapabilityBoundingSet=
+SystemCallArchitectures=native
+RestrictNamespaces=yes
+RestrictAddressFamilies=AF_UNIX
+# Spawns other programs: no MemoryDenyWriteExecute / syscall filter here, children inherit.
+
+[Install]
+WantedBy=flowde.target

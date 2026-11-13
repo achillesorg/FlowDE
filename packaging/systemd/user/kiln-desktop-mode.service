@@ -1,0 +1,40 @@
+[Unit]
+Description=KilnDesktop dock detection and handover
+PartOf=flowde.target
+After=dbus.socket
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kiln-desktop-mode
+Restart=on-failure
+RestartSec=1
+RestartSteps=5
+RestartMaxDelaySec=30
+MemoryMax=24M
+TasksMax=64
+CPUWeight=50
+Nice=5
+# Sandboxing: no root, no new privileges, read-only system, writable only own state.
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%S/flowde %t/flowde -%h/.config/flowde
+StateDirectory=flowde
+RuntimeDirectory=flowde
+RuntimeDirectoryPreserve=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+LockPersonality=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+CapabilityBoundingSet=
+SystemCallArchitectures=native
+RestrictNamespaces=yes
+RestrictAddressFamilies=AF_UNIX
+# Spawns other programs: no MemoryDenyWriteExecute / syscall filter here, children inherit.
+
+[Install]
+WantedBy=flowde.target

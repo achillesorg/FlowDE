@@ -1,0 +1,7 @@
+[Unit]
+Description=FlowDE session services
+Wants=flow-settings.service kiln-notifs.service flow-power.service flow-sensors.service flow-haptics.service flow-net.service kiln-lock.service flow-apps.service flow-theme.service kiln-wall.service flow-clock.service flow-calendar.service flow-media.service kiln-desktop-mode.service
+After=graphical-session-pre.target
+
+[Install]
+WantedBy=graphical-session.target

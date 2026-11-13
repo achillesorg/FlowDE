@@ -1,0 +1,21 @@
+[package]
+name = "kiln-dm"
+description = "KilnDM: display manager backend (session catalogue, autologin policy, greeter state machine, logind view)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "kiln-dm"
+path = "src/main.rs"
+
+[dependencies]
+flow-common.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tracing.workspace = true
+tokio.workspace = true
+zbus.workspace = true

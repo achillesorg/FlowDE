@@ -1,0 +1,21 @@
+[Unit]
+Description=KilnDM display manager backend
+After=systemd-user-sessions.service systemd-logind.service
+
+[Service]
+# Today kiln-dm runs unprivileged logic only (see docs/ARCHITECTURE.md, security model).
+# When the PAM backend lands this is the single root service; it will then keep
+# CAP_SETUID/CAP_SETGID/CAP_SYS_TTY_CONFIG and drop everything else.
+ExecStart=/usr/bin/kiln-dm
+Restart=on-failure
+RuntimeDirectory=flowde
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+RestrictAddressFamilies=AF_UNIX
+MemoryDenyWriteExecute=yes
+LockPersonality=yes
+
+[Install]
+WantedBy=graphical.target

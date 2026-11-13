@@ -1,0 +1,20 @@
+[package]
+name = "flow-apps"
+description = "XDG desktop entry registry, shell-free launching, frecency, lifecycle and permission state"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "flow-apps"
+path = "src/main.rs"
+
+[dependencies]
+flow-common.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tracing.workspace = true
+tokio.workspace = true

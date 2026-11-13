@@ -1,0 +1,21 @@
+[package]
+name = "kiln-wall"
+description = "KilnWall: wallpaper service (per-output, light/dark variants, rotation, dominant colour seed)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "kiln-wall"
+path = "src/main.rs"
+
+[dependencies]
+flow-common.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tracing.workspace = true
+tokio.workspace = true
+png = { version = "0.17", default-features = false }

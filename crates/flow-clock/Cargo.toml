@@ -1,0 +1,20 @@
+[package]
+name = "flow-clock"
+description = "Alarms, timers, stopwatch with suspend-surviving wake scheduling"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "flow-clock"
+path = "src/main.rs"
+
+[dependencies]
+flow-common.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tracing.workspace = true
+tokio.workspace = true
