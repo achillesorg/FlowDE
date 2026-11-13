@@ -34,22 +34,22 @@ Seventeen daemons ran side by side for about 25 s in a private session bus
 
 | Daemon | RSS kB (after 20 s idle) | CPU ticks (1 tick = 10 ms) since start |
 |---|---:|---:|
-| flow-settings | 3260 | 0 |
-| kiln-notifs | 3132 | 2 |
-| flow-power | 3256 | 3 |
-| flow-sensors | 3172 | 5 |
-| flow-haptics | 3092 | 2 |
-| flow-net | 3096 | 2 |
-| flow-apps | 2668 | 2 |
-| flow-theme | 3716 | 3 |
-| kiln-wall | 2444 | 1 |
-| flow-clock | 2512 | 1 |
-| flow-calendar | 2456 | 0 |
-| flow-media | 3088 | 5 |
-| kiln-desktop-mode | 2664 | 1 |
-| flow-camera | 2436 | 1 |
+| flow-settings | 1734 | 0 |
+| kiln-notifs | 1606 | 2 |
+| flow-power | 1799 | 3 |
+| flow-sensors | 1606 | 5 |
+| flow-haptics | 1606 | 2 |
+| flow-net | 1670 | 2 |
+| flow-apps | 1029 | 2 |
+| flow-theme | 1798 | 3 |
+| kiln-wall | 1093 | 1 |
+| flow-clock | 1029 | 1 |
+| flow-calendar | 1029 | 0 |
+| flow-media | 1606 | 5 |
+| kiln-desktop-mode | 1157 | 1 |
+| flow-camera | 965 | 1 |
 | noxal-ai (mock backend) | 3280 | 3 |
-| kiln-dm | 3220 | 0 |
+| kiln-dm | 1798 | 0 |
 | kiln-lock | 21904 (see below) | 67 |
 
 - All but kiln-lock are within the goal of < 6 MB RSS and show no measurable
@@ -64,10 +64,15 @@ Seventeen daemons ran side by side for about 25 s in a private session bus
   The 21.9 MB row above is from a manual start without those variables.
 - CPU of kiln-lock (67 ticks) is the three argon2id operations of the test
   (about 0.2 s each in this VM).
-- `flow-store`, `flow-dlp` and `flowd` were measured separately (not in the
-  table): started with `flow-store`/`flow-dlp` they report RSS through
-  `flow status`/`health`; numbers were of the same order (about 3 MB) but were
-  not recorded in this table.
+- `flow-store` and `flow-dlp` (not autostarted; measured separately, idle for
+  about 33 s after two rejected `dlp.add` jobs): flow-store RSS 2372 kB, 0 CPU
+  ticks, 1 voluntary context switch in total (no idle wakeups: the worker waits
+  on a notification); flow-dlp RSS 2816 kB, 0 CPU ticks, 9 context switches
+  (retry timer sleeps until the next delayed retry, otherwise 10 minutes).
+  `flowd` itself: RSS 2736 kB; its CPU (57 ticks) was spent starting 14 child
+  daemons, not idling.
+- An earlier build of flow-store polled once per second; the measurement showed
+  it (42 ticks in about 40 s) and it was changed to wake on enqueue.
 
 Not measured: noxal-ai with a real model (no model present, none downloaded),
 flow-dlp with a real download, any daemon on real phone hardware, wake-ups per

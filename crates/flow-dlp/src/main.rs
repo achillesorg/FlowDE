@@ -32,6 +32,8 @@ impl Default for Config {
 }
 
 struct Shared {
+    /// Wakes the timer loop to recompute the next retry deadline.
+    wake: tokio::sync::Notify,
     q: Mutex<Queue>,
     engines: Engines,
     cancels: Mutex<HashMap<u32, Arc<AtomicBool>>>,
@@ -104,6 +106,9 @@ fn start_jobs(sh: &Arc<Shared>) {
             }
             sh2.cancels.lock().unwrap().remove(&id);
             sh2.bus.emit("dlp.job", json!({"id": id}));
+            // A slot is free (start the next queued job) and a retry deadline may have changed.
+            start_jobs(&sh2);
+            sh2.wake.notify_one();
         });
     }
 }
@@ -187,6 +192,7 @@ fn dispatch(sh: &Arc<Shared>, m: &str, p: Value) -> ipc::RpcResult {
     };
     save(&sh.q.lock().unwrap());
     start_jobs(sh);
+    sh.wake.notify_one();
     r
 }
 
@@ -215,6 +221,7 @@ fn main() {
             cfg.sandbox && have_bwrap,
         ))]);
         let sh = Arc::new(Shared {
+            wake: tokio::sync::Notify::new(),
             q: Mutex::new(q),
             engines,
             cancels: Mutex::new(HashMap::new()),
@@ -231,7 +238,18 @@ fn main() {
         let t = tokio::spawn(async move {
             loop {
                 start_jobs(&s3);
-                tokio::time::sleep(Duration::from_secs(10)).await;
+                // Sleep until the next delayed retry; otherwise 10 minutes (new work
+                // starts from the request handler, so there is nothing to poll for).
+                let d =
+                    s3.q.lock()
+                        .unwrap()
+                        .next_retry_in(now_s())
+                        .map(|s| s + 1)
+                        .unwrap_or(600);
+                tokio::select! {
+                    _ = tokio::time::sleep(Duration::from_secs(d.min(600))) => {}
+                    _ = s3.wake.notified() => {}
+                }
             }
         });
         Ok((handler, vec![t]))

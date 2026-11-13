@@ -13,6 +13,8 @@ use tokio::io::{AsyncBufReadExt, BufReader};
 struct Shared {
     q: Mutex<Queue>,
     bus: EventBus,
+    /// Wakes the worker when a job is queued (no idle polling).
+    wake: tokio::sync::Notify,
 }
 
 async fn run(cmd: &[&str]) -> Option<String> {
@@ -53,7 +55,7 @@ async fn worker(sh: Arc<Shared>) {
     loop {
         let job = sh.q.lock().unwrap().start_next().cloned_job();
         let Some((id, argv)) = job else {
-            tokio::time::sleep(std::time::Duration::from_secs(1)).await;
+            sh.wake.notified().await;
             continue;
         };
         sh.bus
@@ -99,6 +101,7 @@ fn main() {
         let sh = Arc::new(Shared {
             q: Mutex::new(Queue::default()),
             bus,
+            wake: tokio::sync::Notify::new(),
         });
         let s2 = sh.clone();
         let h: Arc<dyn Handler> = Arc::new(move |m: String, p: Value| {
@@ -149,6 +152,7 @@ fn main() {
                                 .unwrap()
                                 .enqueue(a, p.pkg)
                                 .map_err(RpcError::invalid)?;
+                        sh.wake.notify_one();
                         Ok(json!({"job": id}))
                     }
                     "store.jobs" => ipc::ok(&sh.q.lock().unwrap().jobs),

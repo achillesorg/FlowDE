@@ -103,6 +103,15 @@ impl Queue {
         ids
     }
 
+    /// Seconds until the earliest delayed retry becomes schedulable (None = nothing waiting).
+    pub fn next_retry_in(&self, now: u64) -> Option<u64> {
+        self.jobs
+            .iter()
+            .filter(|j| j.state == State::Queued && j.not_before > now)
+            .map(|j| j.not_before - now)
+            .min()
+    }
+
     pub fn progress(&mut self, id: u32, p: Progress) {
         if let Some(j) = self.job(id) {
             if j.state == State::Downloading {
@@ -302,6 +311,17 @@ mod tests {
         q.recover();
         assert_eq!(q.jobs[0].state, State::Queued);
         assert_eq!(q.jobs[0].attempts, 0);
+    }
+
+    #[test]
+    fn next_retry_timer() {
+        let mut q = Queue::new(1);
+        let a = q.add("https://e.com/a", opts()).unwrap();
+        assert_eq!(q.next_retry_in(0), None);
+        q.schedulable(0);
+        q.failed(a, "timed out", true, 100);
+        assert_eq!(q.next_retry_in(100), Some(30));
+        assert_eq!(q.next_retry_in(130), None);
     }
 
     #[test]
