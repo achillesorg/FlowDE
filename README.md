@@ -70,6 +70,6 @@ MIT licensed. `flow-dlp` drives third-party tools (yt-dlp); users are
 responsible for having the right to download content and for each site's terms
 of service and local law.
 
-## Maintained by Hexsource
+## Maintained by Achilles
 
-This is a project of **[Hexsource](https://hexsource.mandrusia.tech/)**. View the [GitHub organisation](https://github.com/hexsourceorg) for related projects.
+This is a project of **[Achilles](https://achilles.mandrusia.tech/)**. View the [GitHub organisation](https://github.com/hexsourceorg) for related projects.
