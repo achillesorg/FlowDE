@@ -8,7 +8,7 @@ a Qt 6/QML shell prototype (`shell/`) and a nested Smithay mobile compositor
 Goals: optimised for a phone (tiny daemons, idle means idle), a proper
 "liquid glass" default look (original implementation, see
 [docs/liquid-glass.md](docs/liquid-glass.md)), and a clean crossover with
-[Glaze](https://github.com/achillesorg) (the desktop sibling; KilnDesktop hands
+[Glaze](https://github.com/hexsourceorg) (the desktop sibling; KilnDesktop hands
 over to it when a phone is docked).
 
 ## Status
@@ -69,3 +69,7 @@ flow status
 MIT licensed. `flow-dlp` drives third-party tools (yt-dlp); users are
 responsible for having the right to download content and for each site's terms
 of service and local law.
+
+## Maintained by Hexsource
+
+This is a project of **[Hexsource](https://hexsource.mandrusia.tech/)**. View the [GitHub organisation](https://github.com/hexsourceorg) for related projects.
