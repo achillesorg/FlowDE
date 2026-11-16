@@ -8,7 +8,7 @@ a Qt 6/QML shell prototype (`shell/`) and a nested Smithay mobile compositor
 Goals: optimised for a phone (tiny daemons, idle means idle), a proper
 "liquid glass" default look (original implementation, see
 [docs/liquid-glass.md](docs/liquid-glass.md)), and a clean crossover with
-[Glaze](https://github.com/hexsourceorg) (the desktop sibling; KilnDesktop hands
+[Glaze](https://github.com/achillesorg) (the desktop sibling; KilnDesktop hands
 over to it when a phone is docked).
 
 ## Status
@@ -72,4 +72,4 @@ of service and local law.
 
 ## Maintained by Achilles
 
-This is a project of **[Achilles](https://achilles.mandrusia.tech/)**. View the [GitHub organisation](https://github.com/hexsourceorg) for related projects.
+This is a project of **[Achilles](https://achilles.mandrusia.tech/)**. View the [GitHub organisation](https://github.com/achillesorg) for related projects.
