@@ -15,7 +15,7 @@ QtObject {
     property var backdrop: null            // shared downsampled wallpaper source (set by Main)
     property var backdropItem: null
     property int scrollTick: 0              // bumped while pages scroll so lens origins re-evaluate
-    readonly property var names: ["AnthropicGlassIcons", "LiquidGlass", "Minimalist", "MaterialYou", "AnthropicDesign"]
+    readonly property var names: ["GlazeMobile", "AnthropicGlassIcons", "LiquidGlass", "Minimalist", "MaterialYou", "AnthropicDesign"]
 
     function select(n) {
         const k = String(n).toLowerCase().replace(/[-_ ]/g, "")
@@ -25,6 +25,15 @@ QtObject {
     }
 
     readonly property var sets: ({
+        GlazeMobile: {
+            surfGlass: false, iconGlass: false, radius: 2, tileRadius: 2, blur: 0, refraction: 0, bezel: 0, rim: 0,
+            wall: null,
+            light: { text: "#2b2926", dim: "#6b665c", accent: "#d97757", tint: "#faf9f5", tintA: 0, rim: "#fff", flat: "#faf9f5",
+                     hair: "#cfc6b4", onWall: "#2b2926", w0: "#f3efe6", w1: "#f3efe6", w2: "#f3efe6", w3: "#f3efe6",
+                     icon: "#2b2926", card: "#faf9f5", glassTint: "#faf9f5", glyph: "dark" },
+            dark: { text: "#f3efe6", dim: "#b3ac9f", accent: "#d97757", tint: "#2f2c29", tintA: 0, rim: "#fff", flat: "#2f2c29",
+                    hair: "#4a4640", onWall: "#f3efe6", w0: "#1f1e1c", w1: "#1f1e1c", w2: "#1f1e1c", w3: "#1f1e1c",
+                    icon: "#f3efe6", card: "#2f2c29", glassTint: "#2f2c29", glyph: "light" } },
         AnthropicGlassIcons: {
             surfGlass: false, iconGlass: true, radius: 14, tileRadius: 17, blur: 0, refraction: 0, bezel: 1, rim: 0,
             wall: { light: "qrc:/FlowShell/assets/wallpapers/kiln-light.png", dark: "qrc:/FlowShell/assets/wallpapers/night-paper-dark.png" },
@@ -93,7 +102,7 @@ QtObject {
     readonly property real bezelPx: cur.bezel
     readonly property real rim: cur.rim
     readonly property int animMs: reduceMotion ? 0 : 280
-    readonly property bool paper: name === "AnthropicGlassIcons" || name === "AnthropicDesign" || name === "Minimalist"
+    readonly property bool paper: name === "GlazeMobile" || name === "AnthropicGlassIcons" || name === "AnthropicDesign" || name === "Minimalist"
     readonly property string font: "Inter"
     readonly property string serif: (name === "AnthropicGlassIcons" || name === "AnthropicDesign") ? "Noto Serif" : "Inter"
 }

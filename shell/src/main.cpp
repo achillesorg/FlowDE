@@ -15,8 +15,8 @@ int main(int argc, char **argv) {
     engine.rootContext()->setContextProperty("Services", &services);
     engine.rootContext()->setContextProperty("Apps", &apps);
     engine.rootContext()->setContextProperty("StartScreen", qEnvironmentVariable("FLOWDE_START", "lock"));
-    engine.rootContext()->setContextProperty("StartTheme", qEnvironmentVariable("FLOWDE_THEME", "AnthropicGlassIcons"));
-    engine.rootContext()->setContextProperty("StartDark", qEnvironmentVariable("FLOWDE_SCHEME", "light") == "dark");
+    engine.rootContext()->setContextProperty("StartTheme", qEnvironmentVariable("FLOWDE_THEME", "GlazeMobile"));
+    engine.rootContext()->setContextProperty("StartDark", qEnvironmentVariable("FLOWDE_SCHEME", "dark") == "dark");
     engine.loadFromModule("FlowShell", "Main");
     if (engine.rootObjects().isEmpty()) return 1;
 
