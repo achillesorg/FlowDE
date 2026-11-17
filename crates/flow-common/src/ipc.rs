@@ -413,7 +413,10 @@ mod tests {
     use serde_json::json;
 
     fn sock(tag: &str) -> std::path::PathBuf {
-        std::env::temp_dir().join(format!("flow-ipc-{tag}-{}.sock", std::process::id()))
+        // Do not chmod the shared /tmp directory when binding a test socket.
+        let dir = std::env::temp_dir().join(format!("flow-ipc-{}", std::process::id()));
+        crate::paths::ensure_private_dir(&dir).unwrap();
+        dir.join(format!("{tag}.sock"))
     }
 
     async fn start(path: &Path) -> EventBus {

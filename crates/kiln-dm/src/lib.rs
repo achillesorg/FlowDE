@@ -326,8 +326,8 @@ mod tests {
         .unwrap();
         let s = scan_sessions(&[&d]);
         let ids: Vec<_> = s.iter().map(|x| x.id.as_str()).collect();
-        assert_eq!(ids, vec!["glaze", "flowde"]);
-        assert_eq!(s[1].desktop_names, vec!["FlowDE"]);
+        assert_eq!(ids, vec!["flowde", "glaze"]);
+        assert_eq!(s[0].desktop_names, vec!["FlowDE"]);
         std::fs::remove_dir_all(d).unwrap();
     }
 
