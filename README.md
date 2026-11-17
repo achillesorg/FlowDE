@@ -1,14 +1,14 @@
-# FlowDE
+# Glaze Mobile
 
-FlowDE is a mobile desktop environment for Linux phones (Debian, Fedora and
+Glaze Mobile (formerly FlowDE) is a mobile desktop environment for Linux phones (Debian, Fedora and
 postmarketOS style systems, aarch64 first). This repository holds the services/backend layer (`crates/`),
 a Qt 6/QML shell prototype (`shell/`) and a nested Smithay mobile compositor
 (`compositor/`). Everything is an early prototype.
 
 Goals: optimised for a phone (tiny daemons, idle means idle), a proper
-"liquid glass" default look (original implementation, see
-[docs/liquid-glass.md](docs/liquid-glass.md)), and a clean crossover with
-[Glaze](https://github.com/achillesorg) (the desktop sibling; KilnDesktop hands
+Windows Phone-inspired Start tiles in Glaze Clay colours (dark by default),
+while preserving the existing Liquid Glass and other themes, and a clean crossover with
+[GlazeDE](https://github.com/achillesorg/GlazeDE) (the desktop sibling; KilnDesktop hands
 over to it when a phone is docked).
 
 ## Status

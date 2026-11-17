@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import FlowShell
 
 Item {
@@ -9,6 +10,25 @@ Item {
     // curated home: 12 core apps + 4 dock apps (short names). Real .desktop apps stay reachable via search.
     readonly property var core: ["Photos", "Calendar", "Clock", "Music", "Maps", "Notes", "Files", "Weather", "Terminal", "Noxal", "Wallet", "Settings"]
     readonly property var dockNames: ["Phone", "Messages", "Browser", "Camera"]
+    // Glaze Mobile: flat, responsive live-tile home. All existing app launch routes remain intact.
+    readonly property var metroTiles: [
+        {name:"Phone", icon:"phone", span:2, accent:true},
+        {name:"Messages", icon:"chat", span:2, accent:false},
+        {name:"Photos", icon:"photos", span:2, accent:false},
+        {name:"Calendar", icon:"calendar", span:2, accent:true},
+        {name:"Music", icon:"music", span:1, accent:false},
+        {name:"Clock", icon:"clock", span:1, accent:false},
+        {name:"Weather", icon:"weather", span:2, accent:false},
+        {name:"Camera", icon:"camera", span:2, accent:true},
+        {name:"Maps", icon:"maps", span:1, accent:false},
+        {name:"Notes", icon:"notes", span:1, accent:false},
+        {name:"Files", icon:"folder", span:2, accent:false},
+        {name:"Settings", icon:"settings", span:2, accent:false},
+        {name:"Browser", icon:"browser", span:2, accent:true},
+        {name:"Noxal", icon:"noxal", span:1, accent:false},
+        {name:"Wallet", icon:"wallet", span:1, accent:false},
+        {name:"Terminal", icon:"terminal", span:2, accent:false}
+    ]
     signal launched(string name, rect r, bool real)
 
     // Terminal/Files/Browser really launch a .desktop app when one exists; everything else opens a built-in page.
@@ -24,9 +44,80 @@ Item {
         root.launched(name, r, real)
     }
 
+    Flickable {
+        id: metroHome
+        visible: Theme.name === "GlazeMobile"
+        anchors { fill: parent; leftMargin: 20; rightMargin: 20; topMargin: 60; bottomMargin: 44 }
+        contentWidth: width
+        contentHeight: metroColumn.implicitHeight + 16
+        clip: true
+        interactive: !root.searchOpen
+        opacity: root.searchOpen ? 0.1 : 1
+        Behavior on opacity { NumberAnimation { duration: Theme.animMs } }
+        Column {
+            id: metroColumn
+            width: metroHome.width
+            spacing: 16
+            Text { text: "GLAZE MOBILE"; color: Theme.accent; font.family: Theme.font; font.pixelSize: 14; font.weight: Font.Bold; font.letterSpacing: 2 }
+            Text { text: "start"; color: Theme.text; font.family: Theme.font; font.pixelSize: 58; font.weight: Font.Light }
+            Text { text: Qt.formatDate(new Date(), "dddd, d MMMM"); color: Theme.textDim; font.family: Theme.font; font.pixelSize: 15 }
+            Item { width: 1; height: 3 }
+            GridLayout {
+                id: metroGrid
+                width: parent.width
+                columns: 4
+                columnSpacing: 8
+                rowSpacing: 8
+                Repeater {
+                    model: root.metroTiles
+                    Rectangle {
+                        id: metroTile
+                        required property var modelData
+                        Layout.columnSpan: modelData.span
+                        Layout.preferredWidth: (metroGrid.width - 24) * modelData.span / 4 + 8 * (modelData.span - 1)
+                        Layout.preferredHeight: 105
+                        radius: 2
+                        color: modelData.accent ? Theme.accent : Theme.card
+                        scale: metroTap.pressed ? 0.965 : 1
+                        Behavior on scale { enabled: !Theme.reduceMotion; NumberAnimation { duration: 130; easing.type: Easing.OutCubic } }
+                        Image {
+                            x: 13; y: 13; width: 34; height: 34
+                            source: "qrc:/FlowShell/assets/icons/" + modelData.icon + "-" + (modelData.accent ? "dark" : Theme.glyphInk) + ".svg"
+                            sourceSize: Qt.size(68, 68)
+                            fillMode: Image.PreserveAspectFit
+                        }
+                        Text {
+                            x: 13; y: parent.height - height - 10
+                            width: parent.width - 26
+                            text: modelData.name
+                            elide: Text.ElideRight
+                            color: modelData.accent ? "#1c1b19" : Theme.text
+                            font.family: Theme.font; font.pixelSize: 15; font.weight: Font.Medium
+                        }
+                        MouseArea {
+                            id: metroTap
+                            anchors.fill: parent
+                            onClicked: {
+                                const pos = metroTile.mapToItem(root, 0, 0)
+                                root.launchByName(modelData.name, Qt.rect(pos.x, pos.y, metroTile.width, metroTile.height))
+                            }
+                        }
+                    }
+                }
+            }
+            Text {
+                text: "all apps  →"; color: Theme.textDim; font.family: Theme.font
+                font.pixelSize: 17; topPadding: 12; bottomPadding: 24
+                MouseArea { anchors.fill: parent; onClicked: root.searchOpen = true }
+            }
+        }
+    }
+
+    // Existing home layout stays selectable with the other themes.
     // today card (flat paper)
     GlassPanel {
         id: today
+        visible: Theme.name !== "GlazeMobile"
         x: 16; y: 66; width: parent.width - 32; height: 104; radius: Theme.radius
         opacity: root.searchOpen ? 0.1 : 1
         Column {
@@ -40,6 +131,7 @@ Item {
 
     Grid {
         id: grid
+        visible: Theme.name !== "GlazeMobile"
         anchors { top: today.bottom; topMargin: 34; horizontalCenter: parent.horizontalCenter }
         columns: 4; rowSpacing: 38; columnSpacing: 0
         opacity: root.searchOpen ? 0.12 : 1; Behavior on opacity { NumberAnimation { duration: Theme.animMs } }
@@ -60,6 +152,7 @@ Item {
 
     Item {
         id: dock
+        visible: Theme.name !== "GlazeMobile"
         height: 92
         anchors { left: parent.left; right: parent.right; bottom: parent.bottom; leftMargin: 16; rightMargin: 16; bottomMargin: 38 }
         // glass themes: glass surface; image-wallpaper paper theme: hairline outline only (icons refract the wallpaper through it)

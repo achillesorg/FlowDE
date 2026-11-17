@@ -7,7 +7,7 @@ Window {
     visible: true
     width: 540; height: 1170
     color: "black"
-    title: "FlowDE Shell"
+    title: "Glaze Mobile"
 
     // "lock" | "home" | "switcher" | "app"
     property var openApps: []
