@@ -1,14 +1,15 @@
-# FlowDE
+# Glaze Mobile
 
-FlowDE is a mobile desktop environment for Linux phones (Debian, Fedora and
+**Website:** https://glaze.mandrusia.tech/mobile/ · **Desktop sibling:** https://glaze.mandrusia.tech/desktop/
+
+Glaze Mobile (formerly FlowDE) is a mobile desktop environment for Linux phones (Debian, Fedora and
 postmarketOS style systems, aarch64 first). This repository holds the services/backend layer (`crates/`),
 a Qt 6/QML shell prototype (`shell/`) and a nested Smithay mobile compositor
-(`compositor/`). Everything is an early prototype.
+(`compositor/`). Everything is an early prototype. Internal flow-* names remain for compatibility.
 
-Goals: optimised for a phone (tiny daemons, idle means idle), a proper
-"liquid glass" default look (original implementation, see
+Goals: optimised for a phone (tiny daemons, idle means idle), a tile-based Start screen with Glaze Clay colours, optional Liquid Glass visuals (see
 [docs/liquid-glass.md](docs/liquid-glass.md)), and a clean crossover with
-[Glaze](https://github.com/achillesorg) (the desktop sibling; KilnDesktop hands
+[GlazeDE](https://github.com/kilnorg/GlazeDE) (the desktop sibling; KilnDesktop hands
 over to it when a phone is docked).
 
 ## Status
@@ -70,6 +71,6 @@ MIT licensed. `flow-dlp` drives third-party tools (yt-dlp); users are
 responsible for having the right to download content and for each site's terms
 of service and local law.
 
-## Maintained by Achilles
+## Maintained by Kiln GNU/Linux
 
-This is a project of **[Achilles](https://achilles.mandrusia.tech/)**. View the [GitHub organisation](https://github.com/achillesorg) for related projects.
+Part of [Kiln GNU/Linux](https://kiln.mandrusia.tech/). See the [GitHub organisation](https://github.com/kilnorg) for related projects.
